@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferinah Kindness Collective</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="logo">Ferinah Kindness.</div>
+        <div class="logo-text">Ferinah Kindness.</div>
         <ul class="nav-links">
             <li><a href="#about">Tentang</a></li>
             <li><a href="#booklet">Booklet</a></li>
@@ -21,24 +21,33 @@
 
     <header class="hero">
         <div class="container hero-content">
-            <img src="image_a387e3.png" alt="Logo" class="hero-logo">
+            <div class="hero-image">
+                <img src="image_a387e3.png" alt="Logo Ferinah Kindness Collective">
+            </div>
             <h1>Menyebarkan Kebaikan,<br>Satu Hati pada Satu Waktu.</h1>
             <p>Bergabunglah bersama kami untuk menciptakan dampak positif bagi lingkungan dan sesama.</p>
             <div class="cta-group">
                 <a href="#join" class="btn btn-primary">Daftar Sekarang</a>
-                <a href="#booklet" class="btn btn-outline">Pelajari Dulu</a>
+                <a href="#contact" class="btn btn-outline">Hubungi Kami</a>
             </div>
         </div>
     </header>
 
     <section id="booklet" class="section-booklet">
         <div class="container">
-            <div class="booklet-box">
-                <div class="booklet-icon"><i class="ph ph-book-open-text"></i></div>
+            <div class="section-title">
+                <h2>Panduan & Booklet</h2>
+                <p>Pelajari lebih lanjut tentang misi dan program kami melalui panduan resmi.</p>
+            </div>
+            
+            <div class="booklet-card">
+                <div class="booklet-icon">
+                    <i class="ph ph-book-open-text"></i>
+                </div>
                 <div class="booklet-info">
-                    <h3>Panduan Relawan 2024</h3>
-                    <p>Baca visi misi dan tata cara kegiatan kami sebelum bergabung.</p>
-                    <a href="#" class="link-arrow">Download PDF <i class="ph ph-arrow-right"></i></a>
+                    <h3>Booklet Relawan 2024</h3>
+                    <p>Berisi panduan lengkap, visi misi, dan tata cara kegiatan volunteer.</p>
+                    <a href="#" class="btn-link">Download PDF <i class="ph ph-arrow-right"></i></a>
                 </div>
             </div>
         </div>
@@ -47,46 +56,58 @@
     <section id="join" class="section-join">
         <div class="container">
             <div class="section-title">
-                <h2>Pilih Peranmu</h2>
-                <p>Temukan posisi yang sesuai dengan minat dan keahlianmu.</p>
+                <h2>Bergabung Bersama Kami</h2>
+                <p>Pilih peran yang paling cocok dengan minatmu.</p>
             </div>
 
             <div class="grid-cards">
-                <div class="card card-pink">
-                    <div class="icon-wrap"><i class="ph ph-hands-clapping"></i></div>
-                    <h3>Event Volunteer</h3>
-                    <p>Turun langsung ke lapangan, bantu persiapan dan eksekusi acara sosial kami.</p>
-                    <a href="#" class="card-link">Daftar Sekarang &rarr;</a>
+                <div class="card">
+                    <div class="card-header pink-bg">
+                        <h3>Event Volunteer</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Turun langsung ke lapangan dan bantu eksekusi acara sosial kami.</p>
+                        <a href="https://forms.google.com/..." target="_blank" class="btn btn-small">Daftar Disini</a>
+                    </div>
                 </div>
 
-                <div class="card card-green">
-                    <div class="icon-wrap"><i class="ph ph-megaphone"></i></div>
-                    <h3>Social Media</h3>
-                    <p>Sebarkan kebaikan dari rumah melalui konten kreatif dan manajemen media sosial.</p>
-                    <a href="#" class="card-link">Daftar Sekarang &rarr;</a>
+                <div class="card">
+                    <div class="card-header green-bg">
+                        <h3>Social Media Team</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Bantu sebarkan kebaikan melalui konten kreatif di media sosial.</p>
+                        <a href="https://forms.google.com/..." target="_blank" class="btn btn-small">Daftar Disini</a>
+                    </div>
                 </div>
 
-                <div class="card card-pink">
-                    <div class="icon-wrap"><i class="ph ph-heart"></i></div>
-                    <h3>Donation Staff</h3>
-                    <p>Bantu mengelola, mencatat, dan menyalurkan donasi kepada penerima manfaat.</p>
-                    <a href="#" class="card-link">Daftar Sekarang &rarr;</a>
+                <div class="card">
+                    <div class="card-header pink-bg">
+                        <h3>Donation Staff</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Mengelola dan menyalurkan donasi kepada yang membutuhkan.</p>
+                        <a href="https://forms.google.com/..." target="_blank" class="btn btn-small">Daftar Disini</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container footer-flex">
-            <div class="footer-brand">
+    <footer id="contact">
+        <div class="container footer-content">
+            <div class="footer-left">
                 <h3>Ferinah Kindness Collective</h3>
-                <p>© 2024. Let's make a change.</p>
+                <p>Bersama kita bisa membuat perubahan.</p>
             </div>
-            <div class="footer-links">
-                <a href="#"><i class="ph ph-instagram-logo"></i></a>
-                <a href="#"><i class="ph ph-whatsapp-logo"></i></a>
-                <a href="#"><i class="ph ph-envelope-simple"></i></a>
+            <div class="footer-right">
+                <a href="https://instagram.com" target="_blank"><i class="ph ph-instagram-logo"></i> Instagram</a>
+                <a href="https://wa.me/62812345678" target="_blank"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
+                <a href="mailto:hello@ferinah.com"><i class="ph ph-envelope-simple"></i> Email</a>
             </div>
+        </div>
+        <div class="copyright">
+            &copy; 2024 Ferinah Kindness Collective. Made with ❤️
         </div>
     </footer>
 
