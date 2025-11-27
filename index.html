@@ -4,110 +4,535 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ferinah Kindness Collective</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        /* --- 1. VARIABLES & SETUP --- */
+        :root {
+            --pink: #E0AFA0; --pink-deep: #D49A89;
+            --green: #A8C6AE; --green-deep: #8FA895;
+            --green-blob: #D0E8D4; 
+            --brown: #4A3F3F; --brown-light: #7A6868;
+            --bg-body: #F9F7F2; --white: #FFFFFF;
+            --radius: 20px;
+            --radius-pill: 100px;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --shadow-soft: 0 10px 30px rgba(74, 63, 63, 0.04);
+            --shadow-hover: 0 15px 40px rgba(74, 63, 63, 0.08);
+            --shadow-pop: 0 20px 50px rgba(168, 198, 174, 0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-main); background-color: var(--bg-body); color: var(--brown);
+            line-height: 1.5; overflow-x: hidden;
+            background-image: radial-gradient(rgba(74, 63, 63, 0.15) 1.5px, transparent 1.5px);
+            background-size: 20px 20px;
+            font-size: 15px;
+        }
+        h1, h2, h3, h4, .logo, .btn, .btn-nav { font-weight: 800; letter-spacing: -0.5px; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        .container { width: 90%; max-width: 900px; margin: 0 auto; }
+        
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .bouncy { animation: float 3s ease-in-out infinite; }
+
+        /* --- 2. NAVBAR (LOGO DIPERBAIKI PROPORSINYA) --- */
+        .navbar {
+            position: sticky; top: 20px; z-index: 100; 
+            width: 95%; max-width: 1100px; margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px);
+            border-radius: var(--radius-pill); 
+            padding: 10px 30px; 
+            box-shadow: 0 5px 20px rgba(74, 63, 63, 0.05); border: 1px solid rgba(255,255,255,0.6);
+        }
+        .nav-container { 
+            display: flex; align-items: center; justify-content: space-between; 
+            width: 100%; margin: 0;
+        }
+        
+        /* LOGO DIKECILIN DIKIT BIAR GA JOMPLANG */
+        .logo { font-size: 1.35rem; white-space: nowrap; color: var(--brown); }
+        
+        .nav-links { display: flex; gap: 25px; align-items: center; }
+        .nav-links a { font-weight: 600; font-size: 0.95rem; color: var(--brown-light); position: relative; }
+        
+        .nav-links a::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0;
+            background-color: var(--pink); transition: width 0.3s;
+        }
+        .nav-links a:hover { color: var(--brown); }
+        .nav-links a:hover::after { width: 100%; }
+        
+        .btn-nav {
+            background: var(--brown); color: var(--white) !important; padding: 10px 24px;
+            border-radius: var(--radius-pill); font-size: 0.9rem; box-shadow: 0 3px 0 #332a2a;
+            transition: all 0.2s ease; white-space: nowrap;
+        }
+        .btn-nav:hover { transform: translateY(-2px); box-shadow: 0 5px 0 #332a2a; }
+        .btn-nav:active { transform: translateY(2px); box-shadow: 0 0 0 #332a2a; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; } 
+            .navbar { width: 92%; padding: 10px 20px; }
+            .btn-nav { display: block; }
+        }
+
+        /* --- 3. HERO (LOGO GAMBAR TETAP POP-OUT) --- */
+        .hero { text-align: center; padding: 70px 0 50px; }
+        
+        .hero-logo { 
+            width: 230px; margin-bottom: 30px; border-radius: 50%;
+            box-shadow: 0 15px 35px rgba(224, 175, 160, 0.4), 0 5px 15px rgba(74, 63, 63, 0.08);
+        } 
+        
+        .hero h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 15px; color: var(--brown); }
+        .hero p { color: var(--brown-light); max-width: 550px; margin: 0 auto 30px; font-size: 1rem; font-weight: 500; }
+        
+        .cta-group { display: flex; gap: 15px; justify-content: center; margin-bottom: 60px;}
+        
+        .btn { padding: 10px 28px; border-radius: var(--radius-pill); font-size: 0.9rem; font-weight: 800; cursor: pointer; display: inline-block; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .btn-primary { background: var(--pink); color: var(--white); box-shadow: 0 4px 0 var(--pink-deep); margin-bottom: 4px; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--pink-deep); }
+        .btn-primary:active { transform: translateY(4px); box-shadow: 0 0 0 var(--pink-deep); }
+        .btn-outline { background: var(--white); border: 2px solid var(--brown); color: var(--brown); box-shadow: 0 4px 0 rgba(74, 63, 63, 0.1); margin-bottom: 4px; }
+        .btn-outline:hover { transform: translateY(-2px); box-shadow: 0 6px 0 rgba(74, 63, 63, 0.15); }
+        .btn-outline:active { transform: translateY(4px); box-shadow: 0 0 0 transparent; background: var(--bg-body); }
+
+        /* --- CORE VALUES --- */
+        .stats-wrapper { max-width: 850px; margin: 0 auto; position: relative; }
+        .stats-wrapper::before {
+            content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 2px;
+            background: repeating-linear-gradient(90deg, var(--brown-light) 0, var(--brown-light) 8px, transparent 8px, transparent 16px);
+            opacity: 0.2; z-index: 0;
+        }
+        .stats-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; position: relative; z-index: 1; }
+        .stat-card {
+            background: var(--white); padding: 25px 20px; border-radius: 24px;
+            text-align: center; box-shadow: var(--shadow-soft);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-bottom: 4px solid transparent; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .stat-card:nth-child(1) { border-bottom-color: var(--pink); }
+        .stat-card:nth-child(2) { border-bottom-color: var(--green); }
+        .stat-card:nth-child(3) { border-bottom-color: var(--pink); }
+        .stat-card:hover { transform: translateY(-5px) scale(1.02); }
+        
+        .stat-icon-circle {
+            width: 55px; height: 55px; border-radius: 50%; margin-bottom: 15px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+        }
+        .bg-pink-soft { background: rgba(224, 175, 160, 0.2); color: var(--pink-deep); }
+        .bg-green-soft { background: rgba(168, 198, 174, 0.2); color: var(--green-deep); }
+        .stat-number { display: block; font-size: 1.1rem; font-weight: 800; color: var(--brown); margin-bottom: 5px; line-height: 1.2; }
+        .stat-label { font-size: 0.85rem; font-weight: 500; color: var(--brown-light); line-height: 1.4; }
+
+        /* --- SECTIONS GENERAL --- */
+        .section-padding { padding: 60px 0; }
+        .section-header { text-align: center; margin-bottom: 40px; max-width: 550px; margin-left: auto; margin-right: auto; }
+        .section-header h2 { font-size: 2rem; margin-bottom: 10px; }
+        .section-header p { font-size: 0.95rem; }
+
+        /* --- BOOKLET: FUN BLOB STYLE --- */
+        .booklet-wrapper {
+            position: relative; max-width: 800px; margin: 0 auto; z-index: 1;
+        }
+        .blob-accent {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-5deg);
+            width: 102%; height: 120%;
+            background-color: var(--green-blob);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            z-index: -1; opacity: 0.6;
+        }
+        .booklet-pop-card {
+            background-color: var(--white);
+            border: 3px solid var(--green);
+            border-radius: 24px;
+            padding: 35px;
+            display: flex; align-items: center; gap: 30px;
+            box-shadow: var(--shadow-pop);
+            position: relative; transition: transform 0.3s ease;
+        }
+        .booklet-pop-card:hover { transform: translateY(-4px) scale(1.005); }
+        .booklet-icon-large i { 
+            font-size: 4.5rem;
+            color: var(--green); 
+            filter: drop-shadow(0 5px 15px rgba(168, 198, 174, 0.5));
+        }
+        .booklet-info h3 { font-size: 1.4rem; margin-bottom: 8px; }
+        .booklet-info p { font-size: 0.95rem; margin-bottom: 20px; }
+        
+        .btn-download {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--brown); color: white;
+            padding: 10px 24px; border-radius: var(--radius-pill); font-size: 0.9rem;
+            font-weight: 800; transition: all 0.3s ease; box-shadow: 0 4px 0 var(--brown-light);
+        }
+        .btn-download:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--brown-light); background: var(--pink); border-color: var(--pink); }
+        .btn-download:active { transform: translateY(4px); box-shadow: none; }
+
+        /* --- GALLERY --- */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; }
+        .gallery-item {
+            height: 220px;
+            border-radius: 20px; overflow: hidden; position: relative;
+            box-shadow: var(--shadow-soft); cursor: pointer;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .gallery-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 20px 15px;
+            background: linear-gradient(to top, rgba(74, 63, 63, 0.8) 0%, transparent 100%);
+            color: white; font-weight: 700; opacity: 0; transform: translateY(10px);
+            transition: all 0.3s ease; font-size: 0.9rem;
+        }
+        .gallery-item:hover .gallery-overlay { opacity: 1; transform: translateY(0); }
+
+        /* --- JOIN CARDS --- */
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; }
+        .card {
+            background: var(--white); padding: 25px; border-radius: 20px;
+            box-shadow: var(--shadow-soft); transition: transform 0.3s ease;
+            display: flex; flex-direction: column; align-items: flex-start;
+        }
+        .pink-top { border-top: 5px solid var(--pink); }
+        .green-top { border-top: 5px solid var(--green); }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        
+        .card-header-flex { display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-bottom: 15px; }
+        .icon-wrap {
+            font-size: 1.5rem; color: var(--brown); background: var(--bg-body);
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 12px;
+        }
+        .status-badge { font-size: 0.7rem; font-weight: 800; padding: 4px 10px; border-radius: 50px; text-transform: uppercase; }
+        .status-open { background: #DFF0D8; color: #3C763D; border: 1px solid #D6E9C6; } 
+
+        .time-box {
+            background: var(--bg-body); border-radius: 12px; padding: 12px;
+            width: 100%; margin-bottom: 15px; border: 1px dashed rgba(74, 63, 63, 0.2);
+        }
+        .time-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; font-size: 0.85rem; font-weight: 600; color: var(--brown); }
+        .time-row i { color: var(--pink-deep); font-size: 1rem; }
+        .time-label { font-weight: 500; font-size: 0.75rem; color: var(--brown-light); display: block; margin-top: 2px; margin-left: 24px;}
+
+        .card h3 { margin-bottom: 8px; font-size: 1.2rem; }
+        .card p { font-size: 0.9rem; color: var(--brown-light); margin-bottom: 20px; flex-grow: 1; font-weight: 600; }
+        .card-link { font-weight: 800; font-size: 0.85rem; color: var(--brown); margin-top: auto; }
+
+        /* --- FAQ --- */
+        .faq-grid { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+        .faq-item {
+            background: var(--white);
+            border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            border: 1px solid #f0f0f0; transition: all 0.2s ease;
+        }
+        .faq-item:hover { transform: translateY(-2px); border-color: rgba(74, 63, 63, 0.1); }
+        .faq-item[open] { border-color: var(--pink); }
+        .faq-item summary {
+            padding: 18px 25px; cursor: pointer; font-weight: 700; font-size: 0.95rem;
+            list-style: none; display: flex; justify-content: space-between; align-items: center;
+            color: var(--brown); outline: none;
+        }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary::after {
+            content: '+'; font-size: 1.2rem; color: var(--brown-light);
+            transition: 0.3s; font-weight: 400;
+        }
+        .faq-item[open] summary::after { transform: rotate(45deg); color: var(--pink); }
+        .faq-answer { padding: 0 25px 20px; color: var(--brown-light); font-size: 0.9rem; line-height: 1.6; }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--brown); color: var(--bg-body);
+            padding: 50px 0 30px; border-radius: 24px 24px 0 0;
+            position: relative; overflow: hidden; margin-top: 50px;
+        }
+        footer::before {
+            content: ''; position: absolute; top: -50%; left: -20%; width: 60%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(-15deg); pointer-events: none;
+        }
+        .footer-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 2; }
+        .footer-brand-col h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--pink); }
+        .footer-tagline { font-size: 0.9rem; opacity: 0.9; margin-bottom: 20px; max-width: 350px; }
+        .copyright { font-size: 0.8rem; opacity: 0.6; }
+        .footer-connect-col h4 { font-size: 1rem; margin-bottom: 15px; color: var(--white); }
+        .connect-links-stack { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+        .social-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 18px; border-radius: var(--radius-pill);
+            color: var(--white); font-weight: 600; font-size: 0.85rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid transparent; text-decoration: none;
+        }
+        .social-pill i { font-size: 1.1rem; }
+        .insta-pill { background: rgba(224, 175, 160, 0.15); border-color: rgba(224, 175, 160, 0.3); color: var(--pink); }
+        .wa-pill { background: rgba(168, 198, 174, 0.15); border-color: rgba(168, 198, 174, 0.3); color: var(--green); }
+        .email-pill { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+        .social-pill:hover { transform: translateY(-3px); color: var(--brown); }
+        .insta-pill:hover { background: var(--pink); border-color: var(--pink); box-shadow: 0 8px 20px rgba(224, 175, 160, 0.4); }
+        .wa-pill:hover { background: var(--green); border-color: var(--green); box-shadow: 0 8px 20px rgba(168, 198, 174, 0.4); }
+        .email-pill:hover { background: var(--white); border-color: var(--white); box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3); }
+
+        @media (max-width: 768px) {
+            .navbar { width: 92%; padding: 12px 20px; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            .cta-group { flex-direction: column; width: 100%; padding: 0 20px; }
+            .stats-container { grid-template-columns: 1fr; gap: 20px; }
+            .stats-wrapper::before { display: none; }
+            .booklet-pop-card { flex-direction: column; text-align: center; padding: 30px; gap: 20px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            footer { padding: 40px 0 30px; border-radius: 20px 20px 0 0; }
+            .footer-grid { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+            .connect-links-stack { justify-content: center; }
+            .footer-brand-col h3, .footer-tagline { margin-left: auto; margin-right: auto; }
+        }
+    </style>
 </head>
-<body>
+<body id="top">
 
     <nav class="navbar">
-        <div class="logo-text">Ferinah Kindness.</div>
-        <ul class="nav-links">
-            <li><a href="#about">Tentang</a></li>
-            <li><a href="#booklet">Booklet</a></li>
-            <li><a href="#join" class="btn-nav">Gabung Relawan</a></li>
-        </ul>
+        <div class="nav-container">
+            <div class="logo">Ferinah Kindness Collective.</div>
+            
+            <ul class="nav-links">
+                <li><a href="#top">Beranda</a></li>
+                <li><a href="#values">Kenapa Kami</a></li>
+                <li><a href="#booklet">Booklet</a></li>
+                <li><a href="#gallery">Galeri</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#contact">Kontak</a></li>
+            </ul>
+
+            <a href="#join" class="btn-nav">Gabung Aksi</a>
+        </div>
     </nav>
 
     <header class="hero">
         <div class="container hero-content">
-            <div class="hero-image">
-                <img src="image_a387e3.png" alt="Logo Ferinah Kindness Collective">
-            </div>
+            <img src="image_a387e3.png" alt="Logo Ferinah" class="hero-logo bouncy">
             <h1>Menyebarkan Kebaikan,<br>Satu Hati pada Satu Waktu.</h1>
-            <p>Bergabunglah bersama kami untuk menciptakan dampak positif bagi lingkungan dan sesama.</p>
+            <p>Bergabunglah bersama kami untuk menciptakan dampak positif bagi lingkungan dan sesama melalui aksi nyata yang menyenangkan.</p>
             <div class="cta-group">
-                <a href="#join" class="btn btn-primary">Daftar Sekarang</a>
-                <a href="#contact" class="btn btn-outline">Hubungi Kami</a>
+                <a href="#join" class="btn btn-primary">Mulai Beraksi</a>
+                <a href="#faq" class="btn btn-outline">Tanya Dulu</a>
+            </div>
+
+            <div class="stats-wrapper" id="values">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon-circle bg-green-soft">
+                            <i class="ph ph-heart-straight"></i>
+                        </div>
+                        <span class="stat-number">Inklusif</span>
+                        <span class="stat-label">Siapa saja, dari latar belakang apa saja, diterima di sini.</span>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon-circle bg-pink-soft">
+                            <i class="ph ph-hand-heart"></i>
+                        </div>
+                        <span class="stat-number">Transparan</span>
+                        <span class="stat-label">Laporan kegiatan dan donasi yang terbuka dan akuntabel.</span>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon-circle bg-green-soft">
+                            <i class="ph ph-smiley-wink"></i>
+                        </div>
+                        <span class="stat-number">Menyenangkan</span>
+                        <span class="stat-label">Aksi sosial tanpa beban, penuh tawa dan energi positif.</span>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
-    <section id="booklet" class="section-booklet">
+    <section id="booklet" class="section-padding">
         <div class="container">
-            <div class="section-title">
+            <div class="section-header">
                 <h2>Panduan & Booklet</h2>
                 <p>Pelajari lebih lanjut tentang misi dan program kami melalui panduan resmi.</p>
             </div>
             
-            <div class="booklet-card">
-                <div class="booklet-icon">
-                    <i class="ph ph-book-open-text"></i>
-                </div>
-                <div class="booklet-info">
-                    <h3>Booklet Relawan 2024</h3>
-                    <p>Berisi panduan lengkap, visi misi, dan tata cara kegiatan volunteer.</p>
-                    <a href="#" class="btn-link">Download PDF <i class="ph ph-arrow-right"></i></a>
+            <div class="booklet-wrapper">
+                <div class="blob-accent"></div>
+                
+                <div class="booklet-pop-card">
+                    <div class="booklet-icon-large">
+                        <i class="ph ph-book-open-text"></i>
+                    </div>
+                    <div class="booklet-info">
+                        <h3>Booklet Panduan 2025</h3>
+                        <p>Berisi panduan lengkap, visi misi, program internship, dan tata cara kegiatan volunteer. Unduh sekarang untuk mempelajarinya.</p>
+                        
+                        <a href="LINK_GDRIVE_BOOKLET_DISINI" target="_blank" class="btn-download">
+                            <i class="ph ph-download-simple"></i> Download PDF
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="join" class="section-join">
+    <section id="gallery" class="section-padding">
         <div class="container">
-            <div class="section-title">
-                <h2>Bergabung Bersama Kami</h2>
-                <p>Pilih peran yang paling cocok dengan minatmu.</p>
+            <div class="section-header">
+                <h2>Galeri Kebaikan</h2>
+                <p>Momen-momen seru dan bermakna dari kegiatan kami sebelumnya.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=600&auto=format&fit=crop" alt="Foto 1">
+                    <div class="gallery-overlay">Mengajar Anak</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=600&auto=format&fit=crop" alt="Foto 2">
+                    <div class="gallery-overlay">Bantuan Sosial</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600&auto=format&fit=crop" alt="Foto 3">
+                    <div class="gallery-overlay">Aksi Lingkungan</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1526976668912-1a811878dd37?q=80&w=600&auto=format&fit=crop" alt="Foto 4">
+                    <div class="gallery-overlay">Diskusi Seru</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="join" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ambil Peranmu</h2>
+                <p>Pilih cara terbaik bagi Anda untuk berkontribusi dalam misi kebaikan ini.</p>
             </div>
 
             <div class="grid-cards">
-                <div class="card">
-                    <div class="card-header pink-bg">
-                        <h3>Event Volunteer</h3>
+                <div class="card pink-top">
+                    <div class="card-header-flex">
+                        <div class="icon-wrap"><i class="ph ph-hands-clapping"></i></div>
+                        <span class="status-badge status-open">Open Batch 1</span>
                     </div>
-                    <div class="card-body">
-                        <p>Turun langsung ke lapangan dan bantu eksekusi acara sosial kami.</p>
-                        <a href="https://forms.google.com/..." target="_blank" class="btn btn-small">Daftar Disini</a>
+                    <h3>Daftar Volunteer</h3>
+                    <div class="time-box">
+                        <div class="time-row">
+                            <i class="ph ph-calendar-check"></i>
+                            <span>Mei - Juli 2025</span>
+                        </div>
+                        <span class="time-label">Durasi: 3 Bulan (Weekend Only)</span>
                     </div>
+                    <p>Turun langsung ke lapangan. Bergabunglah dalam berbagai kegiatan sosial.</p>
+                    <a href="https://forms.gle/2CNKmRvy2YyjzfWN9" target="_blank" class="card-link">Gabung Relawan &rarr;</a>
                 </div>
 
-                <div class="card">
-                    <div class="card-header green-bg">
-                        <h3>Social Media Team</h3>
+                <div class="card green-top">
+                     <div class="card-header-flex">
+                        <div class="icon-wrap"><i class="ph ph-rocket-launch"></i></div>
+                        <span class="status-badge status-open">Open Batch 1</span>
                     </div>
-                    <div class="card-body">
-                        <p>Bantu sebarkan kebaikan melalui konten kreatif di media sosial.</p>
-                        <a href="https://forms.google.com/..." target="_blank" class="btn btn-small">Daftar Disini</a>
+                    <h3>Program Internship</h3>
+                    <div class="time-box">
+                        <div class="time-row">
+                            <i class="ph ph-calendar-check"></i>
+                            <span>Mei - Juli 2025</span>
+                        </div>
+                        <span class="time-label">Durasi: 3 Bulan (Full/Hybrid)</span>
                     </div>
+                    <p>Dapatkan pengalaman profesional, mentoring, dan terlibat dalam manajemen.</p>
+                    <a href="https://forms.gle/ferGsquM9da2CTGC8" target="_blank" class="card-link">Daftar Internship &rarr;</a>
                 </div>
 
-                <div class="card">
-                    <div class="card-header pink-bg">
-                        <h3>Donation Staff</h3>
+                <div class="card pink-top">
+                    <div class="card-header-flex">
+                        <div class="icon-wrap"><i class="ph ph-heart-straight"></i></div>
+                        <span class="status-badge status-open">Open Batch 1</span>
                     </div>
-                    <div class="card-body">
-                        <p>Mengelola dan menyalurkan donasi kepada yang membutuhkan.</p>
-                        <a href="https://forms.google.com/..." target="_blank" class="btn btn-small">Daftar Disini</a>
+                    <h3>Donasi Sekarang</h3>
+                    <div class="time-box">
+                        <div class="time-row">
+                            <i class="ph ph-calendar-check"></i>
+                            <span>Mei - Juli 2025</span>
+                        </div>
+                        <span class="time-label">Periode Penggalangan Dana</span>
                     </div>
+                    <p>Dukung operasional dan program kami secara finansial.</p>
+                    <a href="https://forms.gle/WctJ16Guwxtodyfs6" target="_blank" class="card-link">Salurkan Donasi &rarr;</a>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section-padding">
+        <div class="container">
+            <div class="section-header">
+                <h2>Tanya Jawab (FAQ)</h2>
+                <p>Pertanyaan yang sering diajukan oleh calon relawan.</p>
+            </div>
+            <div class="faq-grid">
+                <details class="faq-item">
+                    <summary>Apakah perlu pengalaman untuk jadi relawan?</summary>
+                    <div class="faq-answer">
+                        Tidak perlu! Kami menyambut siapa saja yang memiliki niat tulus untuk berbagi kebaikan. Akan ada briefing sebelum kegiatan dimulai.
+                    </div>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>Apakah kegiatan volunteer ini berbayar?</summary>
+                    <div class="faq-answer">
+                        Sebagian besar kegiatan kami gratis. Namun untuk beberapa event khusus (seperti camp luar kota), mungkin ada biaya patungan untuk transportasi dan konsumsi.
+                    </div>
+                </details>
+                
+                <details class="faq-item">
+                    <summary>Bagaimana sistem seleksi internship?</summary>
+                    <div class="faq-answer">
+                        Untuk internship, kami melakukan seleksi berkas (CV) dan wawancara singkat untuk memastikan komitmen dan kesesuaian minat.
+                    </div>
+                </details>
+
+                <details class="faq-item">
+                    <summary>Apakah saya bisa berdonasi selain uang?</summary>
+                    <div class="faq-answer">
+                        Tentu! Kami juga menerima donasi barang layak pakai, buku, mainan, atau makanan pokok. Silakan hubungi admin kami untuk detail drop point.
+                    </div>
+                </details>
             </div>
         </div>
     </section>
 
     <footer id="contact">
-        <div class="container footer-content">
-            <div class="footer-left">
+        <div class="container footer-grid">
+            <div class="footer-brand-col">
                 <h3>Ferinah Kindness Collective</h3>
-                <p>Bersama kita bisa membuat perubahan.</p>
+                <p class="footer-tagline">Mewujudkan dunia yang lebih peduli melalui kolaborasi dan aksi nyata yang tulus.</p>
+                <p class="copyright">© 2025. Dibuat dengan 💖 untuk kebaikan.</p>
             </div>
-            <div class="footer-right">
-                <a href="https://instagram.com" target="_blank"><i class="ph ph-instagram-logo"></i> Instagram</a>
-                <a href="https://wa.me/62812345678" target="_blank"><i class="ph ph-whatsapp-logo"></i> WhatsApp</a>
-                <a href="mailto:hello@ferinah.com"><i class="ph ph-envelope-simple"></i> Email</a>
+            <div class="footer-connect-col">
+                <h4>Tetap Terhubung</h4>
+                <div class="connect-links-stack">
+                    <a href="LINK_IG_DISINI" target="_blank" class="social-pill insta-pill">
+                        <i class="ph ph-instagram-logo"></i>
+                        <span>Instagram</span>
+                    </a>
+                    <a href="LINK_WA_DISINI" target="_blank" class="social-pill wa-pill">
+                        <i class="ph ph-whatsapp-logo"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a href="LINK_EMAIL_DISINI" class="social-pill email-pill">
+                        <i class="ph ph-envelope-simple"></i>
+                        <span>Email</span>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="copyright">
-            &copy; 2024 Ferinah Kindness Collective. Made with ❤️
         </div>
     </footer>
 
